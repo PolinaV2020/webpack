@@ -1,0 +1,26 @@
+{
+  "name": "webpack",
+  "version": "1.0.0",
+  "description": "Webpack configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PolinaV2020/webpack.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "Polina Vlaschik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PolinaV2020/webpack/issues"
+  },
+  "homepage": "https://github.com/PolinaV2020/webpack#readme",
+  "devDependencies": {
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/PolinaV2020/webpack#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "csv-loader": "^3.0.3",
     "html-webpack-plugin": "^5.5.0",

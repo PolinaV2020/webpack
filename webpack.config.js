@@ -1,6 +1,7 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
@@ -38,7 +39,16 @@ module.exports = {
       template: "./index.html"
     }),
     // Plugin для очистки папки dist от неактуальных bundles
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    // Plugin для лопирования отдельных файлов или целых каталогов, которые уже существуют, в каталог сборки
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/assets/hamburger.ico.png"),
+          to: path.resolve(__dirname, "dist")
+        }
+      ]
+    })
   ],
   module: {
     // Loaders позволяют делать импорты файлов форматов не JS и JSON

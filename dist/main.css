@@ -392,3 +392,19 @@ h2 {
   margin: 0 auto;
 }
 
+/*!***************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/less-loader/dist/cjs.js!./styles/styles.less ***!
+  \***************************************************************************************************************/
+.less {
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 30%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.less h3 {
+  text-align: center;
+  font-size: 26px;
+  color: cornflowerblue;
+}
+

@@ -5,6 +5,7 @@ import xml from "./assets/data.xml";
 import csv from "./assets/data.csv";
 import WebpackLogo from "./assets/webpack-logo.png";
 import "./styles/styles.css";
+import "./styles/styles.less";
 
 const post = new Post("1st post", WebpackLogo);
 $("pre").html(post.toString());

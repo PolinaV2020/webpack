@@ -9,6 +9,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
 
+const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -31,7 +33,7 @@ module.exports = {
     analytics: "./analytics.js"
   },
   output: {
-    filename: "[name].[contenthash].bundle.js",
+    filename: filename("js"),
     path: path.resolve(__dirname, "dist")
   },
   resolve: {
@@ -48,7 +50,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 3000,
-    hot: isDev // Заменяет, добавляет или удаляет модули во время работы приложения без полной перезагрузки. Это может значительно ускорить разработку
+    open: true // Сообщает dev-серверу открыть браузер после запуска сервера. Установите значение true, чтобы открыть браузер по умолчанию.
   },
   plugins: [
     // Plugin для автозамены bundles при внесении изменений в файлах
@@ -67,7 +69,7 @@ module.exports = {
       ]
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].bundle.css"
+      filename: filename("css")
     }) // Извлекает CSS в отдельные файлы. Он создает файл CSS для каждого файла JS, который содержит CSS.
   ],
   module: {
@@ -75,7 +77,16 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader"
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
       },
       {
         test: /\.xml$/,

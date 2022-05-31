@@ -1,0 +1,16 @@
+$border: 1px solid #ccc;
+
+.sass {
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 30%;
+
+  border: $border;
+  border-radius: 5px;
+
+  h3 {
+    text-align: center;
+    font-size: 26px;
+    color: #c69;
+}
+}

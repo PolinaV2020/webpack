@@ -25,6 +25,20 @@ const optimization = () => {
   return config;
 };
 
+const cssLoader = (addition) => {
+  const config = [
+    {
+      loader: MiniCssExtractPlugin.loader
+    },
+    "css-loader"
+  ];
+
+  if (addition) {
+    config.push(addition);
+  }
+  return config;
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
@@ -50,6 +64,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 3000,
+    hot: false,
     open: true // Сообщает dev-серверу открыть браузер после запуска сервера. Установите значение true, чтобы открыть браузер по умолчанию.
   },
   plugins: [
@@ -77,16 +92,15 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          "css-loader"
-        ]
+        use: cssLoader()
       },
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
+        use: cssLoader("less-loader")
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: cssLoader("sass-loader")
       },
       {
         test: /\.xml$/,

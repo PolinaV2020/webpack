@@ -25,7 +25,7 @@ const optimization = () => {
   return config;
 };
 
-const cssLoader = (addition) => {
+const cssLoaders = (addition) => {
   const config = [
     {
       loader: MiniCssExtractPlugin.loader
@@ -39,12 +39,24 @@ const cssLoader = (addition) => {
   return config;
 };
 
+const babelOptions = (addition) => {
+  const options = {
+    presets: ["@babel/preset-env"]
+  };
+
+  if (addition) {
+    options.presets.push(addition);
+  }
+  return options;
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
   entry: {
-    main: "./index.js",
-    analytics: "./analytics.js"
+    main: ["@babel/polyfill", "./index.jsx"],
+    analytics: "./analytics.js",
+    typescript: "./typescript.ts"
   },
   output: {
     filename: filename("js"),
@@ -92,15 +104,15 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: cssLoader()
+        use: cssLoaders()
       },
       {
         test: /\.less$/,
-        use: cssLoader("less-loader")
+        use: cssLoaders("less-loader")
       },
       {
         test: /\.s[ac]ss$/,
-        use: cssLoader("sass-loader")
+        use: cssLoaders("sass-loader")
       },
       {
         test: /\.xml$/,
@@ -118,6 +130,30 @@ module.exports = {
       {
         test: /\.(ttf|woff|woff2|eot)$/,
         type: "asset/resource"
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: babelOptions()
+        }
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: babelOptions("@babel/preset-typescript")
+        }
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: babelOptions("@babel/preset-react")
+        }
       }
     ]
   }

@@ -79,6 +79,7 @@ module.exports = {
     hot: false,
     open: true // Сообщает dev-серверу открыть браузер после запуска сервера. Установите значение true, чтобы открыть браузер по умолчанию.
   },
+  devtool: isDev ? "source-map" : false,
   plugins: [
     // Plugin для автозамены bundles при внесении изменений в файлах
     new HTMLWebpackPlugin({

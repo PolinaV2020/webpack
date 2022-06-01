@@ -1,12 +1,11 @@
-/******/ (() => { // webpackBootstrap
+/******/ (function() { // webpackBootstrap
 var __webpack_exports__ = {};
 /*!***********************!*\
   !*** ./typescript.ts ***!
   \***********************/
 function createTypeScriptMessage() {
-  const message = "Use TypeScript";
+  var message = "Use TypeScript";
   return message;
 }
 /******/ })()
 ;
-//# sourceMappingURL=typescript.js.map

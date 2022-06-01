@@ -1,1 +1,0 @@
-{"version":3,"file":"typescript.js","mappings":";;;;;AAAA,SAASA,uBAAT,GAA2C;EACzC,MAAMC,OAAO,GAAG,gBAAhB;EACA,OAAOA,OAAP;AACD,C","sources":["webpack:///./typescript.ts"],"sourcesContent":["function createTypeScriptMessage(): string {\r\n  const message = \"Use TypeScript\";\r\n  return message;\r\n}\r\n"],"names":["createTypeScriptMessage","message"],"sourceRoot":""}

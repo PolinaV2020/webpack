@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
@@ -65,6 +66,35 @@ const JSLoaders = () => {
   return loaders;
 };
 
+const plugins = () => {
+  const plugins = [
+    // Plugin для автозамены bundles при внесении изменений в файлах
+    new HTMLWebpackPlugin({
+      template: "./index.html"
+    }),
+    // Plugin для очистки папки dist от неактуальных bundles
+    new CleanWebpackPlugin(),
+    // Plugin для лопирования отдельных файлов или целых каталогов, которые уже существуют, в каталог сборки
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/assets/hamburger.ico.png"),
+          to: path.resolve(__dirname, "dist")
+        }
+      ]
+    }),
+    new MiniCssExtractPlugin({
+      filename: filename("css")
+    }) // Извлекает CSS в отдельные файлы. Он создает файл CSS для каждого файла JS, который содержит CSS.
+  ];
+
+  if (isProd) {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
+
+  return plugins;
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
@@ -91,30 +121,12 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 3000,
+    webSocketServer: false,
     hot: false,
     open: true // Сообщает dev-серверу открыть браузер после запуска сервера. Установите значение true, чтобы открыть браузер по умолчанию.
   },
   devtool: isDev ? "source-map" : false,
-  plugins: [
-    // Plugin для автозамены bundles при внесении изменений в файлах
-    new HTMLWebpackPlugin({
-      template: "./index.html"
-    }),
-    // Plugin для очистки папки dist от неактуальных bundles
-    new CleanWebpackPlugin(),
-    // Plugin для лопирования отдельных файлов или целых каталогов, которые уже существуют, в каталог сборки
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src/assets/hamburger.ico.png"),
-          to: path.resolve(__dirname, "dist")
-        }
-      ]
-    }),
-    new MiniCssExtractPlugin({
-      filename: filename("css")
-    }) // Извлекает CSS в отдельные файлы. Он создает файл CSS для каждого файла JS, который содержит CSS.
-  ],
+  plugins: plugins(),
   module: {
     // Loaders позволяют делать импорты файлов форматов не JS и JSON
     rules: [
